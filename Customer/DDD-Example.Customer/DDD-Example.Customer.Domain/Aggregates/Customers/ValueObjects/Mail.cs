@@ -11,6 +11,11 @@ public sealed class Mail : ValueObject
 
     internal static Mail Create(string email)
     {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            throw new ArgumentException($"{nameof(Mail)} cannot be null or whitespace.");
+        }
+        
         return new Mail
         {
             Value = email

@@ -9,8 +9,23 @@ public sealed class Address : ValueObject
         
     }
 
-    internal static Address Create()
+    internal static Address Create(string country,  string city, string street)
     {
+        if (string.IsNullOrWhiteSpace(country))
+        {
+            throw new ArgumentException($"{nameof(Country)} cannot be null or whitespace.");
+        }
+
+        if (string.IsNullOrWhiteSpace(city))
+        {
+            throw new ArgumentException($"{nameof(City)} cannot be null or whitespace.");
+        }
+
+        if (string.IsNullOrWhiteSpace(street))
+        {
+            throw new ArgumentException($"{nameof(Street)} cannot be null or whitespace.");
+        }
+        
         return new Address
         {
             Country = null,

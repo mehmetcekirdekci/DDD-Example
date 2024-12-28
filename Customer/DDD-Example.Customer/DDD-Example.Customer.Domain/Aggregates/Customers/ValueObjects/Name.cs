@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using DDD_Example.Customer.Domain.Base;
 
 namespace DDD_Example.Customer.Domain.Aggregates.Customers.ValueObjects;
@@ -11,14 +12,14 @@ public sealed class Name : ValueObject
 
     internal static Name Create(string firstName, string lastName)
     {
-        if (firstName is null)
+        if (string.IsNullOrWhiteSpace(firstName))
         {
-            
+            throw new ArgumentException($"{nameof(FirstName)} cannot be null or whitespace.");
         }
 
-        if (lastName is null)
+        if (string.IsNullOrWhiteSpace(lastName))
         {
-            
+            throw new ArgumentException($"{nameof(LastName)} cannot be null or whitespace.");
         }
         
         return new Name

@@ -1,5 +1,6 @@
 using System.Net.Mail;
 using DDD_Example.Customer.Domain.Aggregates.Customers.Enums;
+using DDD_Example.Customer.Domain.Aggregates.Customers.Models;
 using DDD_Example.Customer.Domain.Aggregates.Customers.ValueObjects;
 using DDD_Example.Customer.Domain.Base;
 
@@ -11,17 +12,23 @@ public class Customer : BaseEntity, IAggregateRoot
     {
     }
 
-    internal static Customer Create()
+    internal static Customer Create(CustomerCreateModel createModel)
     {
+        if (!Enum.IsDefined(createModel.Gender))
+        {
+            throw new ArgumentException($"{nameof(Gender)} is invalid.");
+        }
+        
         return new Customer
         {
             Id = Guid.NewGuid(),
-            Name = Name.Create("sefa", "çekirdekci"),
-            BirthDate = BirthDate.Create(DateOnly.MinValue),
-            Address = Address.Create(),
-            Mail = Mail.Create("sefa@gmail.com"),
-            Gender = Gender.Male,
-            Status = Status.Active,
+            Name = Name.Create(createModel.FirstName, createModel.LastName),
+            BirthDate = BirthDate.Create(createModel.BirthDate),
+            Address = Address.Create(createModel.Country, createModel.City, createModel.Street),
+            Mail = Mail.Create(createModel.Email),
+            Phone = Phone.Create(createModel.CountryCode, createModel.PhoneNumber),
+            Gender = createModel.Gender,
+            Status = Status.Create(false, MailStatus.Create(false), LicenceStatus.Create(false))
         };
     }
 
@@ -29,6 +36,7 @@ public class Customer : BaseEntity, IAggregateRoot
     public BirthDate BirthDate { get; private init; }
     public Address Address { get; private init; }
     public Mail Mail { get; private init; }
+    public Phone Phone { get; private init; }
     public Gender Gender { get; private init; }
     public Status Status { get; private init; }
 }

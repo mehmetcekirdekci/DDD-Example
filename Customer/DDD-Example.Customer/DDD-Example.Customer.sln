@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDD-Example.Customer.Domain", "DDD-Example.Customer.Domain\DDD-Example.Customer.Domain.csproj", "{90328A0D-518B-49C8-BCDB-8A831BD67E6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDD-Example.Customer.Application", "DDD-Example.Customer.Application\DDD-Example.Customer.Application.csproj", "{CB68EF40-8DEC-4A6C-9E8C-E982B4416925}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDD-Example.Customer.Api", "DDD-Example.Customer.Api\DDD-Example.Customer.Api.csproj", "{0376FD6C-EB74-404F-A6CC-5006C639BFAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{90328A0D-518B-49C8-BCDB-8A831BD67E6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90328A0D-518B-49C8-BCDB-8A831BD67E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90328A0D-518B-49C8-BCDB-8A831BD67E6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB68EF40-8DEC-4A6C-9E8C-E982B4416925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB68EF40-8DEC-4A6C-9E8C-E982B4416925}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB68EF40-8DEC-4A6C-9E8C-E982B4416925}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB68EF40-8DEC-4A6C-9E8C-E982B4416925}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0376FD6C-EB74-404F-A6CC-5006C639BFAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0376FD6C-EB74-404F-A6CC-5006C639BFAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0376FD6C-EB74-404F-A6CC-5006C639BFAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0376FD6C-EB74-404F-A6CC-5006C639BFAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
