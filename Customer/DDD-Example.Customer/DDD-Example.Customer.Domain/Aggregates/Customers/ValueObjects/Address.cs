@@ -28,9 +28,9 @@ public sealed class Address : ValueObject
         
         return new Address
         {
-            Country = null,
-            City = null,
-            Street = null
+            Country = country,
+            City = city,
+            Street = street
         };
     }
 

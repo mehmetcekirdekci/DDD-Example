@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace DDD_Example.Customer.Domain.Base;
 
 public abstract class BaseEntity
@@ -6,5 +8,15 @@ public abstract class BaseEntity
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     private readonly List<DomainEvent> _domainEvents = new();
-    public IReadOnlyList<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    [NotMapped] public IReadOnlyList<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+
+    public void AddDomainEvent(DomainEvent domainEvent)
+    {
+        _domainEvents.Add(domainEvent);
+    }
+
+    public void ClearDomainEvents()
+    {
+        _domainEvents.Clear();
+    }
 }

@@ -24,13 +24,11 @@ public sealed class Name : ValueObject
         
         return new Name
         {
-            Value = firstName + " " + lastName,
             FirstName = firstName,
             LastName = lastName
         };
     }
-
-    public string Value { get; private init; }
+    [NotMapped] public string Value => FirstName + " " + LastName;
     public string FirstName { get; private init; }
     public string LastName { get; private init; }
     protected override IEnumerable<object> GetEqualityComponents()
