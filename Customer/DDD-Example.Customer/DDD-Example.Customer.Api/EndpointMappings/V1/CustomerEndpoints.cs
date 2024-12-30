@@ -9,10 +9,14 @@ public static class CustomerEndpoints
     {
         var groupBuilder = endpoints.MapGroup("/v{version:apiVersion}/customers");
         
-        var version = groupBuilder.NewApiVersionSet()
+        var apiVersionset = groupBuilder.NewApiVersionSet()
             .HasApiVersion(new ApiVersion(1))
+            .ReportApiVersions()
             .Build();
         
-        groupBuilder.MapPost("", CustomerHandlers.Create);
+        groupBuilder.MapPost("", CustomerHandlers.Create)
+            .WithName("Create")
+            .WithApiVersionSet(apiVersionset)
+            .MapToApiVersion(1);
     }
 }
