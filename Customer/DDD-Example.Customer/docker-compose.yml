@@ -13,7 +13,7 @@ services:
   db-customer:
     image: postgres
     ports:
-      - 5432:5432
+      - 5433:5433
     networks:
       - ddd
     shm_size: 128mb
