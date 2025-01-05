@@ -6,6 +6,8 @@ services:
       dockerfile: DDD-Example.Customer.Api/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+    depends_on:
+      - db-customer
     ports:
       - 8080-8080
     networks:
@@ -13,12 +15,12 @@ services:
   db-customer:
     image: postgres
     ports:
-      - 5433:5433
+      - 5432:5432
     networks:
       - ddd
     shm_size: 128mb
     volumes:
-      - ~/apps/ddd-example-customer:/var/lib/postgres/data
+      - ~/apps/ddd-example-customer:/var/lib/postgres2/data
     environment:
       - POSTGRES_USER=customer
       - POSTGRES_PASSWORD=customer

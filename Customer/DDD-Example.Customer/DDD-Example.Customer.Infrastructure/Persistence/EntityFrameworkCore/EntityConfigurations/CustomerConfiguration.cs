@@ -9,24 +9,40 @@ public sealed class CustomerConfiguration : IEntityTypeConfiguration<Domain.Aggr
     {
         builder.Property(x => x.Id).ValueGeneratedNever();
         
-        builder.ComplexProperty(x => x.Name).IsRequired();
+        builder.ComplexProperty(x => x.Name, y =>
+        {
+            y.Property(z => z.FirstName).IsRequired();
+            y.Property(z => z.LastName).IsRequired();
+            y.IsRequired();
+        });
         
         builder.ComplexProperty(x => x.BirthDate, y =>
         {
             y.Property(z => z.Value);
             y.IsRequired();
         });
-
-        //builder.ComplexProperty(x => x.Address).IsRequired();
         
-        builder.ComplexProperty(x => x.Mail, y =>
+        builder.ComplexProperty(x => x.Address, y =>
         {
-            y.Property(z => z.Value);
+            y.Property(z => z.Country).IsRequired();
+            y.Property(z => z.City).IsRequired();
+            y.Property(z => z.Street).IsRequired();
             y.IsRequired();
         });
         
-        builder.ComplexProperty(x => x.Phone).IsRequired();
-
+        builder.ComplexProperty(x => x.Mail, y =>
+        {
+            y.Property(z => z.Value).IsRequired();
+            y.IsRequired();
+        });
+        
+        
+        builder.ComplexProperty(x => x.Phone, y =>
+        {
+            y.Property(z => z.CountryCode).IsRequired();
+            y.Property(z => z.Number).IsRequired();
+            y.IsRequired();
+        });
         
         builder.ComplexProperty(x => x.Status, y =>
         {

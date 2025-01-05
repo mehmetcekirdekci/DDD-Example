@@ -17,7 +17,6 @@ public sealed class CustomerDbContext : DbContext, IUnitOfWork
 
     public DbSet<Domain.Aggregates.Customers.Customer> Customers { get; set; }
 
-
     async Task<int> IUnitOfWork.SaveChangesAsync(CancellationToken cancellationToken)
     {
         var result = await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
@@ -36,5 +35,10 @@ public sealed class CustomerDbContext : DbContext, IUnitOfWork
         await _domainEventDispatcher.Dispatch(domainEvents, cancellationToken).ConfigureAwait(false);
 
         return result;
+    }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerDbContext).Assembly);
     }
 }

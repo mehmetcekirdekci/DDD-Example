@@ -1,8 +1,11 @@
 using DDD_Example.Customer.Api.Mappers;
 using DDD_Example.Customer.Application;
 using DDD_Example.Customer.Application.Commands;
+using DDD_Example.Customer.Application.Repositories;
+using DDD_Example.Customer.Domain.Aggregates.Customers.Factories;
 using DDD_Example.Customer.Infrastructure.DomainEventDispatcher;
 using DDD_Example.Customer.Infrastructure.Persistence.EntityFrameworkCore;
+using DDD_Example.Customer.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +43,12 @@ public static class CustomerRegistrations
         #region Types
             // Mappers
             services.AddSingleton<ICustomerEndpointMapper, CustomerEndpointMapper>();
+            
+            // Repositories
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            
+            // Factories
+            services.AddScoped<ICustomerFactory, CustomerFactory>();
         #endregion
 
         return services;
