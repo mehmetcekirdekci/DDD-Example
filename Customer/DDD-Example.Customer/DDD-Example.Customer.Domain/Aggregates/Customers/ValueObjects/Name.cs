@@ -30,8 +30,11 @@ public sealed class Name : ValueObject
     }
     public string FirstName { get; private init; }
     public string LastName { get; private init; }
-    
-    public string FullName => FirstName + " " + LastName;
+
+    public string FullName()
+    {
+        return FirstName + " " + LastName;
+    }
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return FirstName;
