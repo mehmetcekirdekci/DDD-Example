@@ -33,5 +33,10 @@ public static class CustomerEndpoints
             .WithName("Passive")
             .WithApiVersionSet(apiVersionset)
             .MapToApiVersion(1);
+        
+        groupBuilder.MapPut("/{id}", CustomerHandlers.Update)
+            .WithName("Update")
+            .WithApiVersionSet(apiVersionset)
+            .MapToApiVersion(1);
     }
 }

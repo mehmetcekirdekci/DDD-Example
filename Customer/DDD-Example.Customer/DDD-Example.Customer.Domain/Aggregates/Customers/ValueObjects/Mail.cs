@@ -18,11 +18,31 @@ public sealed class Mail : ValueObject
         
         return new Mail
         {
-            Value = email
+            Value = email,
+            IsApproved = false
         };
     }
     
     public string Value { get; private init; }
+    public bool IsApproved { get; private init; }
+    
+    internal Mail Approve()
+    {
+        return new Mail
+        {
+            IsApproved = true,
+            Value = Value
+        };
+    }
+    
+    public Mail UnApprove()
+    {
+        return new Mail
+        {
+            IsApproved = false,
+            Value = Value
+        };
+    }
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

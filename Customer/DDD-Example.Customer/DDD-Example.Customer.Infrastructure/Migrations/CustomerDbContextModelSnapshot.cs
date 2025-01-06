@@ -34,6 +34,9 @@ namespace DDD_Example.Customer.Infrastructure.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -62,9 +65,24 @@ namespace DDD_Example.Customer.Infrastructure.Migrations
                                 .HasColumnType("date");
                         });
 
+                    b.ComplexProperty<Dictionary<string, object>>("Licence", "DDD_Example.Customer.Domain.Aggregates.Customers.Customer.Licence#Licence", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Image")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<bool>("IsApproved")
+                                .HasColumnType("boolean");
+                        });
+
                     b.ComplexProperty<Dictionary<string, object>>("Mail", "DDD_Example.Customer.Domain.Aggregates.Customers.Customer.Mail#Mail", b1 =>
                         {
                             b1.IsRequired();
+
+                            b1.Property<bool>("IsApproved")
+                                .HasColumnType("boolean");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
@@ -95,36 +113,6 @@ namespace DDD_Example.Customer.Infrastructure.Migrations
                             b1.Property<string>("Number")
                                 .IsRequired()
                                 .HasColumnType("text");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("Status", "DDD_Example.Customer.Domain.Aggregates.Customers.Customer.Status#Status", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<bool>("IsActive")
-                                .HasColumnType("boolean");
-
-                            b1.ComplexProperty<Dictionary<string, object>>("LicenceStatus", "DDD_Example.Customer.Domain.Aggregates.Customers.Customer.Status#Status.LicenceStatus#LicenceStatus", b2 =>
-                                {
-                                    b2.IsRequired();
-
-                                    b2.Property<bool>("IsApproved")
-                                        .HasColumnType("boolean");
-
-                                    b2.Property<DateTime>("UpdatedAt")
-                                        .HasColumnType("timestamp with time zone");
-                                });
-
-                            b1.ComplexProperty<Dictionary<string, object>>("MailStatus", "DDD_Example.Customer.Domain.Aggregates.Customers.Customer.Status#Status.MailStatus#MailStatus", b2 =>
-                                {
-                                    b2.IsRequired();
-
-                                    b2.Property<bool>("IsApproved")
-                                        .HasColumnType("boolean");
-
-                                    b2.Property<DateTime>("UpdatedAt")
-                                        .HasColumnType("timestamp with time zone");
-                                });
                         });
 
                     b.HasKey("Id");

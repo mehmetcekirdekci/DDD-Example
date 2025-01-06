@@ -59,4 +59,18 @@ public static class CustomerHandlers
         
         return TypedResults.NoContent();
     }
+    
+    public static async Task<Results<ProblemHttpResult, NoContent, BadRequest>> Update(
+        [FromBody] UpdateCustomerRequest request,
+        [FromRoute] Guid id,
+        [FromServices] ICustomerEndpointMapper mapper,
+        [FromServices] IMediator mediator,
+        CancellationToken cancellationToken)
+    {
+        var commandInput = mapper.MapToUpdateCustomerCommandInput(id, request);
+        
+        await mediator.Send(commandInput, cancellationToken);
+        
+        return TypedResults.NoContent();
+    }
 }

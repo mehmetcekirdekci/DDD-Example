@@ -2,7 +2,7 @@ using DDD_Example.Customer.Domain.Aggregates.Customers.Enums;
 
 namespace DDD_Example.Customer.Domain.Aggregates.Customers.Models;
 
-public class CustomerCreateModel
+public class CustomerUpdateModel
 {
     public string FirstName { get; init; }
     public string LastName { get; init; }

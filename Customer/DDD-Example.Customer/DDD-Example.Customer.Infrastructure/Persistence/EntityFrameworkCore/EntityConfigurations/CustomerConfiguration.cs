@@ -33,9 +33,9 @@ public sealed class CustomerConfiguration : IEntityTypeConfiguration<Domain.Aggr
         builder.ComplexProperty(x => x.Mail, y =>
         {
             y.Property(z => z.Value).IsRequired();
+            y.Property(z => z.IsApproved).IsRequired();
             y.IsRequired();
         });
-        
         
         builder.ComplexProperty(x => x.Phone, y =>
         {
@@ -44,10 +44,10 @@ public sealed class CustomerConfiguration : IEntityTypeConfiguration<Domain.Aggr
             y.IsRequired();
         });
         
-        builder.ComplexProperty(x => x.Status, y =>
+        builder.ComplexProperty(x => x.Licence, y =>
         {
-            y.ComplexProperty(z => z.MailStatus).IsRequired();
-            y.ComplexProperty(z => z.LicenceStatus).IsRequired();
+            y.Property(z => z.Image).IsRequired();
+            y.Property(z => z.IsApproved).IsRequired();
             y.IsRequired();
         });
 

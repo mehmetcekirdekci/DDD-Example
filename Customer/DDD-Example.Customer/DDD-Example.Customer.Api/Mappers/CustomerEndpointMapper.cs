@@ -10,6 +10,7 @@ public interface ICustomerEndpointMapper
     public ApproveMailCommandInput MapToApproveMailCommandInput(Guid customerId);
     public ApproveLicenceCommandInput MapToApproveLicenceCommandInput(Guid id);
     public PassiveCustomerCommandInput MapToPassiveCustomerCommandInput(Guid id);
+    public UpdateCustomerCommandInput MapToUpdateCustomerCommandInput(Guid id, UpdateCustomerRequest request);
 }
 
 public class CustomerEndpointMapper : ICustomerEndpointMapper
@@ -27,6 +28,7 @@ public class CustomerEndpointMapper : ICustomerEndpointMapper
             Mail = request.Mail,
             PhoneCountryCode = request.PhoneCountryCode,
             PhoneNumber = request.PhoneNumber,
+            LicenceImage = request.LicenceImage,
             Gender = request.Gender
         };
     }
@@ -52,6 +54,25 @@ public class CustomerEndpointMapper : ICustomerEndpointMapper
         return new PassiveCustomerCommandInput
         {
             CustomerId = id
+        };
+    }
+
+    public UpdateCustomerCommandInput MapToUpdateCustomerCommandInput(Guid id, UpdateCustomerRequest request)
+    {
+        return new UpdateCustomerCommandInput
+        {
+            Id = id,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            BirthDate = request.BirthDate,
+            Country = request.Country,
+            City = request.City,
+            Street = request.Street,
+            Mail = request.Mail,
+            PhoneCountryCode = request.PhoneCountryCode,
+            PhoneNumber = request.PhoneNumber,
+            LicenceImage = request.LicenceImage,
+            Gender = request.Gender
         };
     }
 }

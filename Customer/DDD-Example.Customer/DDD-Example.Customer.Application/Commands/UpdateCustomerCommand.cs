@@ -8,28 +8,36 @@ using MediatR;
 
 namespace DDD_Example.Customer.Application.Commands;
 
-public class CreateCustomerCommand : IRequestHandler<CreateCustomerCommandInput>
+public class UpdateCustomerCommand : IRequestHandler<UpdateCustomerCommandInput>
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly ICustomerFactory _customerFactory;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateCustomerCommand(ICustomerRepository customerRepository, ICustomerFactory customerFactory, IUnitOfWork unitOfWork)
+    public UpdateCustomerCommand(ICustomerRepository customerRepository, ICustomerFactory customerFactory,
+        IUnitOfWork unitOfWork)
     {
         _customerRepository = customerRepository;
         _customerFactory = customerFactory;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(CreateCustomerCommandInput input, CancellationToken cancellationToken)
+    public async Task Handle(UpdateCustomerCommandInput input, CancellationToken cancellationToken)
     {
-        var isCustomerExist = await _customerRepository.IsExistAsync(input.Mail, input.PhoneCountryCode, input.PhoneNumber, cancellationToken);
-        if (isCustomerExist)
+        var customer = await _customerRepository.GetByIdAsync(input.Id, cancellationToken);
+        if (customer is null || customer.Status == Status.Passive)
+        {
+            throw new CustomerNotFoundException();
+        }
+
+        var newCustomerExist = await _customerRepository.IsAnotherExistAsync(input.Id, input.Mail, input.PhoneCountryCode,
+            input.PhoneNumber, cancellationToken);
+        if (newCustomerExist)
         {
             throw new CustomerAlreadyExistException();
         }
 
-        var customer = _customerFactory.Create(new CustomerCreateModel
+        customer.Update(new CustomerUpdateModel
         {
             FirstName = input.FirstName,
             LastName = input.LastName,
@@ -40,11 +48,9 @@ public class CreateCustomerCommand : IRequestHandler<CreateCustomerCommandInput>
             Email = input.Mail,
             CountryCode = input.PhoneCountryCode,
             PhoneNumber = input.PhoneNumber,
-            LicenceImage = input.LicenceImage,
-            Gender = (Gender)input.Gender
+            LicenceImage = input.LicenceImage
         });
-        
-        _customerRepository.Add(customer);
+
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

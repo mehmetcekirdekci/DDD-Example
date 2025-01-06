@@ -13,5 +13,6 @@ public class CreateCustomerRequest
     public string Mail { get; init; }
     public string PhoneCountryCode { get; init; }
     public string PhoneNumber { get; init; }
+    public string LicenceImage { get; init; }
     public int Gender { get; init; }
 }
