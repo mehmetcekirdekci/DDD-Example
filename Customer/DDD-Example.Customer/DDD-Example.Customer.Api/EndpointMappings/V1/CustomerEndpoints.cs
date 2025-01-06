@@ -18,5 +18,20 @@ public static class CustomerEndpoints
             .WithName("Create")
             .WithApiVersionSet(apiVersionset)
             .MapToApiVersion(1);
+        
+        groupBuilder.MapPut("/{id}/approve-mail", CustomerHandlers.ApproveMail)
+            .WithName("ApproveMail")
+            .WithApiVersionSet(apiVersionset)
+            .MapToApiVersion(1);
+        
+        groupBuilder.MapPut("/{id}/approve-licence", CustomerHandlers.ApproveLicence)
+            .WithName("ApproveLicence")
+            .WithApiVersionSet(apiVersionset)
+            .MapToApiVersion(1);
+        
+        groupBuilder.MapPut("/{id}/passive", CustomerHandlers.Passive)
+            .WithName("Passive")
+            .WithApiVersionSet(apiVersionset)
+            .MapToApiVersion(1);
     }
 }

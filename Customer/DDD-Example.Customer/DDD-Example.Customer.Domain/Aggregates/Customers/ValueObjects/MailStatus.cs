@@ -18,8 +18,10 @@ public sealed class MailStatus : ValueObject
     }
     public bool IsApproved { get; private init; }
     public DateTime UpdatedAt { get; private init; }
+    
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return IsApproved;
+        yield return UpdatedAt;
     }
 }

@@ -1,11 +1,15 @@
 using DDD_Example.Customer.Api.Models.Requests;
 using DDD_Example.Customer.Application.Inputs;
+using MediatR;
 
 namespace DDD_Example.Customer.Api.Mappers;
 
 public interface ICustomerEndpointMapper
 {
     public CreateCustomerCommandInput MapToCreateCustomerCommandInput(CreateCustomerRequest request);
+    public ApproveMailCommandInput MapToApproveMailCommandInput(Guid customerId);
+    public ApproveLicenceCommandInput MapToApproveLicenceCommandInput(Guid id);
+    public PassiveCustomerCommandInput MapToPassiveCustomerCommandInput(Guid id);
 }
 
 public class CustomerEndpointMapper : ICustomerEndpointMapper
@@ -24,6 +28,30 @@ public class CustomerEndpointMapper : ICustomerEndpointMapper
             PhoneCountryCode = request.PhoneCountryCode,
             PhoneNumber = request.PhoneNumber,
             Gender = request.Gender
+        };
+    }
+
+    public ApproveMailCommandInput MapToApproveMailCommandInput(Guid customerId)
+    {
+        return new ApproveMailCommandInput
+        {
+            CustomerId = customerId
+        };
+    }
+    
+    public ApproveLicenceCommandInput MapToApproveLicenceCommandInput(Guid customerId)
+    {
+        return new ApproveLicenceCommandInput
+        {
+            CustomerId = customerId
+        };
+    }
+
+    public PassiveCustomerCommandInput MapToPassiveCustomerCommandInput(Guid id)
+    {
+        return new PassiveCustomerCommandInput
+        {
+            CustomerId = id
         };
     }
 }

@@ -1,4 +1,3 @@
-using System.Net.Mail;
 using DDD_Example.Customer.Domain.Aggregates.Customers.Enums;
 using DDD_Example.Customer.Domain.Aggregates.Customers.Models;
 using DDD_Example.Customer.Domain.Aggregates.Customers.ValueObjects;
@@ -38,5 +37,20 @@ public class Customer : BaseEntity, IAggregateRoot
     public Mail Mail { get; private init; }
     public Phone Phone { get; private init; }
     public Gender Gender { get; private init; }
-    public Status Status { get; private init; }
+    public Status Status { get; private set; }
+    
+    public void ApproveMail()
+    {
+        Status = Status.ApproveMail();
+    }
+
+    public void ApproveLicence()
+    {
+        Status = Status.ApproveLicence();
+    }
+
+    public void Passive()
+    {
+        Status = Status.Passive();
+    }
 }

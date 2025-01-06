@@ -9,7 +9,7 @@ public sealed class CustomerDbContext : DbContext, IUnitOfWork
 {
     private readonly IDomainEventDispatcher _domainEventDispatcher;
 
-    public CustomerDbContext(DbContextOptions<CustomerDbContext> options, 
+    public CustomerDbContext(DbContextOptions<CustomerDbContext> options,
         IDomainEventDispatcher domainEventDispatcher) : base(options)
     {
         _domainEventDispatcher = domainEventDispatcher;
@@ -19,6 +19,7 @@ public sealed class CustomerDbContext : DbContext, IUnitOfWork
 
     async Task<int> IUnitOfWork.SaveChangesAsync(CancellationToken cancellationToken)
     {
+        AddTimeStamps();
         var result = await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         if (_domainEventDispatcher is null)
@@ -36,9 +37,26 @@ public sealed class CustomerDbContext : DbContext, IUnitOfWork
 
         return result;
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerDbContext).Assembly);
+    }
+
+    private void AddTimeStamps()
+    {
+        var entities = ChangeTracker
+            .Entries()
+            .Where(e => e.Entity is BaseEntity && (e.State is EntityState.Added or EntityState.Modified));
+
+        foreach (var entity in entities)
+        {
+            var now = DateTime.UtcNow;
+            if (entity.State == EntityState.Added)
+            {
+                ((BaseEntity)entity.Entity).CreatedAt = now;
+            }
+            ((BaseEntity)entity.Entity).UpdatedAt = now;
+        }
     }
 }

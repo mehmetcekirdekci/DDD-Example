@@ -28,12 +28,12 @@ public sealed class Name : ValueObject
             LastName = lastName
         };
     }
-    [NotMapped] public string Value => FirstName + " " + LastName;
     public string FirstName { get; private init; }
     public string LastName { get; private init; }
+    
+    public string FullName => FirstName + " " + LastName;
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return Value;
         yield return FirstName;
         yield return LastName;
     }

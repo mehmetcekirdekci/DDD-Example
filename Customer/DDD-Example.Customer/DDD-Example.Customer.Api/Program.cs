@@ -1,16 +1,21 @@
 using Asp.Versioning;
 using DDD_Example.Customer.Api.EndpointMappings.V1;
+using DDD_Example.Customer.Api.Middlewares;
 using DDD_Example.Customer.Api.ServiceRegistrations;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
-// Api Registrations
-builder.Services.AddOpenApi();
 
-builder.Services.AddApiVersioning(options =>
+var servicesCollection = builder.Services;
+
+// Api Registrations
+servicesCollection.AddOpenApi();
+
+servicesCollection.AddApiVersioning(options =>
 {
     options.DefaultApiVersion = new ApiVersion(1);
     options.ReportApiVersions = true;
@@ -25,7 +30,12 @@ builder.Services.AddApiVersioning(options =>
 });
 
 // Service Registrations
-builder.Services.RegisterCustomer(builder.Configuration);
+servicesCollection.RegisterCustomer(builder.Configuration);
+
+// ExcepitonHandlers
+servicesCollection.AddExceptionHandler<DomainExceptionHandler>();
+servicesCollection.AddExceptionHandler<DefaultExceptionHandler>();
+servicesCollection.AddProblemDetails();
 
 var app = builder.Build();
 
@@ -33,9 +43,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Test")
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
 
+app.UseExceptionHandler();
 app.MapCustomerEndpoints();
 app.Run();

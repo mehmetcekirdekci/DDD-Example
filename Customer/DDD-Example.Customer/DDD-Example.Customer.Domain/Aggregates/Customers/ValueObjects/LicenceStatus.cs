@@ -13,7 +13,7 @@ public sealed class LicenceStatus : ValueObject
         return new LicenceStatus
         {
             IsApproved = isApproved,
-            UpdatedAt = DateTime.Now
+            UpdatedAt = DateTime.UtcNow
         };
     }
     
@@ -22,5 +22,6 @@ public sealed class LicenceStatus : ValueObject
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return IsApproved;
+        yield return UpdatedAt;
     }
 }

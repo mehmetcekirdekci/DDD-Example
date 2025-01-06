@@ -1,9 +1,9 @@
 using DDD_Example.Customer.Application.Inputs;
-using DDD_Example.Customer.Application.Outputs;
 using DDD_Example.Customer.Application.Repositories;
 using DDD_Example.Customer.Domain.Aggregates.Customers.Enums;
 using DDD_Example.Customer.Domain.Aggregates.Customers.Factories;
 using DDD_Example.Customer.Domain.Aggregates.Customers.Models;
+using DDD_Example.Customer.Domain.Exceptions;
 using MediatR;
 
 namespace DDD_Example.Customer.Application.Commands;
@@ -26,7 +26,7 @@ public class CreateCustomerCommand : IRequestHandler<CreateCustomerCommandInput>
         var isUserExist = await _customerRepository.IsUserExistAsync(input.Mail, cancellationToken);
         if (isUserExist)
         {
-            //todo: throw exception
+            throw new CustomerAlreadyExistException();
         }
 
         var customer = _customerFactory.Create(new CustomerCreateModel
