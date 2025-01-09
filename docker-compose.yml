@@ -12,6 +12,19 @@ services:
       - 8080-8080
     networks:
       - ddd
+  vehicle.api:
+    image: vehicle.api
+    build:
+      context: .
+      dockerfile: DDD-Example.Vehicle.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    depends_on:
+      - db-vehicle
+    ports:
+      - 8080-8080
+    networks:
+      - ddd
   db-customer:
     image: postgres
     ports:
@@ -24,6 +37,18 @@ services:
     environment:
       - POSTGRES_USER=customer
       - POSTGRES_PASSWORD=customer
+  db-vehicle:
+    image: postgres
+    ports:
+      - 5433:5433
+    networks:
+      - ddd
+    shm_size: 128mb
+    volumes:
+      - ~/apps/ddd-example-vehicle:/var/lib/postgres2/data
+    environment:
+      - POSTGRES_USER=vehicle
+      - POSTGRES_PASSWORD=vehicle
 networks:
   ddd:
     name: ddd
