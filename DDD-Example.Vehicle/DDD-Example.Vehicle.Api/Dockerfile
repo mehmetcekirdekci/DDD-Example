@@ -7,10 +7,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["DDD-Example.Vehicle.Api/DDD-Example.Vehicle.Api.csproj", "DDD-Example.Vehicle.Api/"]
-RUN dotnet restore "DDD-Example.Vehicle.Api/DDD-Example.Vehicle.Api.csproj"
-COPY . .
-WORKDIR "/src/DDD-Example.Vehicle.Api"
+COPY ./ ./
+
+WORKDIR "/src/DDD-Example.Vehicle/DDD-Example.Vehicle.Api"
+RUN dotnet restore
+
 RUN dotnet build "DDD-Example.Vehicle.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

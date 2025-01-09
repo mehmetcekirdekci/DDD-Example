@@ -3,26 +3,26 @@ services:
     image: customer.api
     build:
       context: .
-      dockerfile: DDD-Example.Customer.Api/Dockerfile
+      dockerfile: DDD-Example.Customer/DDD-Example.Customer.Api/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
     depends_on:
       - db-customer
     ports:
-      - 8080-8080
+      - 5050-8080
     networks:
       - ddd
   vehicle.api:
     image: vehicle.api
     build:
       context: .
-      dockerfile: DDD-Example.Vehicle.Api/Dockerfile
+      dockerfile: DDD-Example.Vehicle/DDD-Example.Vehicle.Api/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
     depends_on:
       - db-vehicle
     ports:
-      - 8080-8080
+      - 5959-8080
     networks:
       - ddd
   db-customer:
@@ -40,7 +40,7 @@ services:
   db-vehicle:
     image: postgres
     ports:
-      - 5433:5433
+      - 5433:5432
     networks:
       - ddd
     shm_size: 128mb
