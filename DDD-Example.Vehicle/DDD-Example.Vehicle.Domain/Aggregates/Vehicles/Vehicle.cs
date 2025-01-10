@@ -46,4 +46,9 @@ public class Vehicle : BaseEntity, IAggregateRoot
     {
         Status = Status.Active;
     }
+
+    public void UpdatePrice(Currency currency, decimal amount)
+    {
+        Price = Price.Create(currency, amount);
+    }
 }

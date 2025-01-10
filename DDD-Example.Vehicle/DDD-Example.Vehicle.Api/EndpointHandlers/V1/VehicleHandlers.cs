@@ -33,4 +33,18 @@ public static class VehicleHandlers
         
         return TypedResults.NoContent();
     }
+
+    public static async Task<Results<ProblemHttpResult, NoContent, BadRequest>> UpdatePrice(
+        [FromBody] UpdateVehiclePriceRequest request,
+        [FromRoute] Guid id,
+        [FromServices] IVehicleEndpointMapper mapper,
+        [FromServices] IMediator mediator,
+        CancellationToken cancellationToken)
+    {
+        var commandInput = mapper.MapToUpdateVehiclePriceCommandInput(id, request.PriceCurrency, request.PriceAmount);
+        
+        await mediator.Send(commandInput, cancellationToken);
+        
+        return TypedResults.NoContent();
+    }
 }

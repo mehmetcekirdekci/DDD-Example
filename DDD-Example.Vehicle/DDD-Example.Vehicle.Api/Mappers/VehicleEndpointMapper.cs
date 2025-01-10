@@ -8,6 +8,7 @@ public interface IVehicleEndpointMapper
 {
     public CreateVehicleCommandInput MapToCreateVehicleCommandInput(CreateVehicleRequest request);
     public DeleteVehicleCommandInput MapToDeleteVehicleCommandInput(Guid id);
+    public UpdateVehiclePriceCommandInput MapToUpdateVehiclePriceCommandInput(Guid id, int currency, decimal amount);
 }
 
 public class VehicleEndpointMapper : IVehicleEndpointMapper
@@ -33,6 +34,16 @@ public class VehicleEndpointMapper : IVehicleEndpointMapper
         return new DeleteVehicleCommandInput
         {
             Id = id
+        };
+    }
+
+    public UpdateVehiclePriceCommandInput MapToUpdateVehiclePriceCommandInput(Guid id, int currency, decimal amount)
+    {
+        return new UpdateVehiclePriceCommandInput
+        {
+            Id = id,
+            PriceCurrency = currency,
+            PriceAmount = amount
         };
     }
 }
