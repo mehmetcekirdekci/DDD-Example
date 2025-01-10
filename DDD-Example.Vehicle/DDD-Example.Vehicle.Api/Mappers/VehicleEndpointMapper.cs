@@ -13,7 +13,7 @@ public interface IVehicleEndpointMapper
     public UpdateVehiclePriceCommandInput MapToUpdateVehiclePriceCommandInput(Guid id, int currency, decimal amount);
     public GetVehicleQueryInput MapToGetVehicleQueryInput(Guid id);
     public GetVehicleResponse MapToGetVehicleResponse(GetVehicleQueryOutput output);
-
+    public GetVehiclesResponse MapToGetVehiclesResponse(GetVehiclesQueryOutput output);
 }
 
 public class VehicleEndpointMapper : IVehicleEndpointMapper
@@ -71,6 +71,23 @@ public class VehicleEndpointMapper : IVehicleEndpointMapper
             Type = output.Type,
             Color = output.Color,
             Mileage = output.Mileage
+        };
+    }
+
+    public GetVehiclesResponse MapToGetVehiclesResponse(GetVehiclesQueryOutput output)
+    {
+        return new GetVehiclesResponse
+        {
+            Vehicles = output.Vehicles.Select(vehicle => new DDD_Example.Vehicle.Api.Models.Responses.VehicleDto
+            {
+                Id = vehicle.Id,
+                Plate = vehicle.Plate,
+                Brand = vehicle.Brand,
+                Type = vehicle.Type,
+                Year = vehicle.Year,
+                Color = vehicle.Color,
+                Mileage = vehicle.Mileage
+            }).ToList()
         };
     }
 }

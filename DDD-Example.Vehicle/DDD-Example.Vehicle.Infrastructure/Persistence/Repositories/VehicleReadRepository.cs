@@ -10,4 +10,10 @@ public class VehicleReadRepository(VehicleDbContext vehicleDbContext) : IVehicle
         return await vehicleDbContext.Vehicles.AsNoTracking().FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken)
             .ConfigureAwait(false);
     }
+
+    public async Task<List<Domain.Aggregates.Vehicles.Vehicle>> GetListAsync(CancellationToken cancellationToken)
+    {
+        return await vehicleDbContext.Vehicles.AsNoTracking().ToListAsync(cancellationToken)
+            .ConfigureAwait(false);
+    }
 }

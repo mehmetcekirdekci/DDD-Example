@@ -1,6 +1,7 @@
 using DDD_Example.Vehicle.Api.Mappers;
 using DDD_Example.Vehicle.Api.Models.Requests;
 using DDD_Example.Vehicle.Api.Models.Responses;
+using DDD_Example.Vehicle.Application.Inputs;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +61,18 @@ public static class VehicleHandlers
         var queryOutput = await mediator.Send(queryInput, cancellationToken);
         
         var response = mapper.MapToGetVehicleResponse(queryOutput);
+        
+        return TypedResults.Ok(response);
+    }
+
+    public static async Task<Results<ProblemHttpResult, Ok<GetVehiclesResponse>, BadRequest>> GetVehicles(
+        [FromServices] IVehicleEndpointMapper mapper,
+        [FromServices] IMediator mediator,
+        CancellationToken cancellationToken)
+    {
+        var queryOutput = await mediator.Send(new GetVehiclesQueryInput(), cancellationToken);
+        
+        var response = mapper.MapToGetVehiclesResponse(queryOutput);
         
         return TypedResults.Ok(response);
     }
