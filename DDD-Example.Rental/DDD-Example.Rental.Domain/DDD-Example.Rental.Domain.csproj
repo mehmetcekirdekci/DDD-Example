@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <RootNamespace>DDD_Example.Rental.Domain</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Aggregates\Rentals\Enums\" />
+      <Folder Include="Aggregates\Rentals\Factories\" />
+      <Folder Include="Aggregates\Rentals\Models\" />
+      <Folder Include="Aggregates\Rentals\ValueObjects\" />
+      <Folder Include="Constants\" />
+      <Folder Include="Exceptions\" />
+    </ItemGroup>
+
+</Project>
