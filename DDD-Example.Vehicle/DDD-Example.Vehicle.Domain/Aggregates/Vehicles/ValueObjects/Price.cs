@@ -11,7 +11,7 @@ public sealed class Price : ValueObject
 
     internal static Price Create(Currency currency, decimal amount)
     {
-        if (Enum.IsDefined(currency))
+        if (!Enum.IsDefined(currency))
         {
             throw new ArgumentException("Invalid currency. The currency must not be null or empty.");
         }

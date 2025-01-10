@@ -1,9 +1,11 @@
 using DDD_Example.Vehicle.Api.Mappers;
 using DDD_Example.Vehicle.Application;
 using DDD_Example.Vehicle.Application.Commands;
+using DDD_Example.Vehicle.Application.Repositories;
 using DDD_Example.Vehicle.Domain.Aggregates.Vehicles.Factories;
 using DDD_Example.Vehicle.Infrastructure.DomainEventDispatcher;
 using DDD_Example.Vehicle.Infrastructure.Persistence;
+using DDD_Example.Vehicle.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DDD_Example.Vehicle.Api.ServiceRegistrations;
@@ -42,7 +44,7 @@ public static class VehicleRegistrations
         services.AddSingleton<IVehicleEndpointMapper, VehicleEndpointMapper>();
             
         // Repositories
-        
+        services.AddScoped<IVehicleRepository, VehicleRepository>();
             
         // Factories
         services.AddScoped<IVehicleFactory, VehicleFactory>();
