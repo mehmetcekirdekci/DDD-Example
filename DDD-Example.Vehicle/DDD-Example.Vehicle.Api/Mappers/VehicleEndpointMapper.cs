@@ -1,5 +1,7 @@
 using DDD_Example.Vehicle.Api.Models.Requests;
+using DDD_Example.Vehicle.Api.Models.Responses;
 using DDD_Example.Vehicle.Application.Inputs;
+using DDD_Example.Vehicle.Application.Outputs;
 using DDD_Example.Vehicle.Domain.Aggregates.Vehicles.Enums;
 
 namespace DDD_Example.Vehicle.Api.Mappers;
@@ -9,6 +11,9 @@ public interface IVehicleEndpointMapper
     public CreateVehicleCommandInput MapToCreateVehicleCommandInput(CreateVehicleRequest request);
     public DeleteVehicleCommandInput MapToDeleteVehicleCommandInput(Guid id);
     public UpdateVehiclePriceCommandInput MapToUpdateVehiclePriceCommandInput(Guid id, int currency, decimal amount);
+    public GetVehicleQueryInput MapToGetVehicleQueryInput(Guid id);
+    public GetVehicleResponse MapToGetVehicleResponse(GetVehicleQueryOutput output);
+
 }
 
 public class VehicleEndpointMapper : IVehicleEndpointMapper
@@ -44,6 +49,28 @@ public class VehicleEndpointMapper : IVehicleEndpointMapper
             Id = id,
             PriceCurrency = currency,
             PriceAmount = amount
+        };
+    }
+
+    public GetVehicleQueryInput MapToGetVehicleQueryInput(Guid id)
+    {
+        return new GetVehicleQueryInput
+        {
+            Id = id
+        };
+    }
+
+    public GetVehicleResponse MapToGetVehicleResponse(GetVehicleQueryOutput output)
+    {
+        return new GetVehicleResponse
+        {
+            Id = output.Id,
+            Plate = output.Plate,
+            Year = output.Year,
+            Brand = output.Brand,
+            Type = output.Type,
+            Color = output.Color,
+            Mileage = output.Mileage
         };
     }
 }

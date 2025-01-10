@@ -45,6 +45,7 @@ public static class VehicleRegistrations
             
         // Repositories
         services.AddScoped<IVehicleRepository, VehicleRepository>();
+        services.AddScoped<IVehicleReadRepository, VehicleReadRepository>();
             
         // Factories
         services.AddScoped<IVehicleFactory, VehicleFactory>();

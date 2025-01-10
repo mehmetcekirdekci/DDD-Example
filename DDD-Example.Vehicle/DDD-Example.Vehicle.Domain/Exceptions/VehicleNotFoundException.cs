@@ -6,7 +6,7 @@ namespace DDD_Example.Vehicle.Domain.Exceptions;
 
 public class VehicleNotFoundException : BaseException
 {
-    public VehicleNotFoundException() : base(HttpStatusCode.BadRequest, ExceptionMessages.VehicleAlreadyExist, true)
+    public VehicleNotFoundException() : base(HttpStatusCode.BadRequest, ExceptionMessages.VehicleNotFound, true)
     {
     }
 }

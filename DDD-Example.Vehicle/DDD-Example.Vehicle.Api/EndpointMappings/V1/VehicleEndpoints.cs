@@ -28,5 +28,10 @@ public static class VehicleEndpoints
             .WithName("UpdatePrice")
             .WithApiVersionSet(apiVersionset)
             .MapToApiVersion(1);
+        
+        groupBuilder.MapGet("/{id}", VehicleHandlers.GetVehicle)
+            .WithName("GetVehicle")
+            .WithApiVersionSet(apiVersionset)
+            .MapToApiVersion(1);
     }
 }
