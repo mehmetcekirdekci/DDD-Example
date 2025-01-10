@@ -7,6 +7,7 @@ namespace DDD_Example.Vehicle.Api.Mappers;
 public interface IVehicleEndpointMapper
 {
     public CreateVehicleCommandInput MapToCreateVehicleCommandInput(CreateVehicleRequest request);
+    public DeleteVehicleCommandInput MapToDeleteVehicleCommandInput(Guid id);
 }
 
 public class VehicleEndpointMapper : IVehicleEndpointMapper
@@ -24,6 +25,14 @@ public class VehicleEndpointMapper : IVehicleEndpointMapper
             ColorCode = request.ColorCode,
             ColorName = request.ColorName,
             Mileage = request.Mileage
+        };
+    }
+
+    public DeleteVehicleCommandInput MapToDeleteVehicleCommandInput(Guid id)
+    {
+        return new DeleteVehicleCommandInput
+        {
+            Id = id
         };
     }
 }

@@ -36,4 +36,14 @@ public class Vehicle : BaseEntity, IAggregateRoot
     public Color Color { get; private set; }
     public Mileage Mileage { get; private set; }
     public Status Status { get; private set; }
+
+    public void Delete()
+    {
+        Status = Status.Deleted;
+    }
+
+    public void Activate()
+    {
+        Status = Status.Active;
+    }
 }

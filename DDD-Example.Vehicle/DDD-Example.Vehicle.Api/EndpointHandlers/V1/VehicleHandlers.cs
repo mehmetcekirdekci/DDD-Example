@@ -19,5 +19,18 @@ public static class VehicleHandlers
         await mediator.Send(commandInput, cancellationToken);
         
         return TypedResults.Created();
-    } 
+    }
+
+    public static async Task<Results<ProblemHttpResult, NoContent, BadRequest>> Delete(
+        [FromRoute] Guid id,
+        [FromServices] IVehicleEndpointMapper mapper,
+        [FromServices] IMediator mediator,
+        CancellationToken cancellationToken)
+    {
+        var commandInput = mapper.MapToDeleteVehicleCommandInput(id);
+        
+        await mediator.Send(commandInput, cancellationToken);
+        
+        return TypedResults.NoContent();
+    }
 }

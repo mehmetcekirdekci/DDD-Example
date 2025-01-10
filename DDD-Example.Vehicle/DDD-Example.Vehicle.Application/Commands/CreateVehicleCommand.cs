@@ -23,26 +23,35 @@ public class CreateVehicleCommand : IRequestHandler<CreateVehicleCommandInput>
 
     public async Task Handle(CreateVehicleCommandInput input, CancellationToken cancellationToken)
     {
-        var isVehicleExist = await _vehicleRepository.IsExistAsync(input.Plate, cancellationToken);
-        if (isVehicleExist)
+        var vehicle = await _vehicleRepository.GetByPlateAsync(input.Plate, cancellationToken);
+        if (vehicle != null)
         {
-            throw new VehicleAlreadyExistException();
+            if (vehicle.Status.Equals(Status.Deleted))
+            {
+                vehicle.Activate();
+            }
+            else
+            {
+                throw new VehicleAlreadyExistException();
+            }
         }
-
-        var vehicle = _vehicleFactory.Create(new VehicleCreateModel
+        else
         {
-            Plate = input.Plate,
-            Year = input.Year,
-            PriceCurrency = (Currency)input.PriceCurrency,
-            PriceAmount = input.PriceAmount,
-            Brand = input.Brand,
-            Type = input.Type,
-            ColorCode = input.ColorCode,
-            ColorName = input.ColorName,
-            Mileage = input.Mileage
-        });
+            var vehicleToBeCreate = _vehicleFactory.Create(new VehicleCreateModel
+            {
+                Plate = input.Plate,
+                Year = input.Year,
+                PriceCurrency = (Currency)input.PriceCurrency,
+                PriceAmount = input.PriceAmount,
+                Brand = input.Brand,
+                Type = input.Type,
+                ColorCode = input.ColorCode,
+                ColorName = input.ColorName,
+                Mileage = input.Mileage
+            });
+            _vehicleRepository.Add(vehicleToBeCreate);
+        }
         
-        _vehicleRepository.Add(vehicle);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
